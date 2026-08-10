@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>StudySnap</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(160deg,#172552,#080c18 55%);color:#f4f7ff;min-height:100vh}
+main{width:min(720px,100%);margin:auto;padding:24px 16px 40px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.tag{font-size:11px;letter-spacing:.15em;font-weight:800;color:#9db0ff}h1{font-size:38px;margin:3px 0}p{color:#aeb9d2;margin:0}.card{margin-top:14px;padding:20px;border:1px solid #2c3b65;background:#121a2eeb;border-radius:22px;box-shadow:0 15px 40px #0003}h2{font-size:18px;margin:0 0 14px}
+.upload{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:140px;border:2px dashed #455889;border-radius:17px;background:#0d1528;cursor:pointer}.upload input{display:none}.upload b{font-size:17px}.upload span{font-size:13px;color:#8998ba;margin-top:5px}
+img{max-width:100%;max-height:360px;display:block;margin:14px auto 0;border-radius:15px;background:#080b12}.hide{display:none!important}
+textarea{width:100%;min-height:105px;margin-top:13px;border-radius:14px;border:1px solid #344566;background:#0b1325;color:#fff;padding:13px;font:inherit;resize:vertical}textarea:focus{outline:2px solid #7188ff;border-color:transparent}
+.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}button{border:0;border-radius:13px;padding:12px 16px;font-weight:800;cursor:pointer}.primary{background:#7188ff;color:#fff}.secondary{background:#293652;color:#e8edff}
+.result{white-space:pre-wrap;line-height:1.6;background:#0b1325;border:1px solid #2b3d67;border-radius:14px;padding:15px}.pill{display:inline-block;font-size:12px;background:#183a2a;color:#8cf1b2;padding:5px 9px;border-radius:99px;margin-left:8px}
+.notice{margin-top:12px;padding:11px;border-radius:12px;background:#282112;color:#ddcf9e;font-size:13px}
+footer{text-align:center;color:#7583a2;font-size:12px;margin-top:20px}
+</style>
+</head>
+<body>
+<main>
+<header class="top"><div><div class="tag">STUDY HELPER</div><h1>StudySnap</h1><p>Screenshot → question → explanation.</p></div><button id="theme" class="secondary">☾</button></header>
+
+<section class="card">
+<h2>1. Add your question</h2>
+<label class="upload">
+<input id="file" type="file" accept="image/*">
+<b>📸 Choose a screenshot</b><span>Or type the question below</span>
+</label>
+<img id="preview" class="hide" alt="Screenshot preview">
+<textarea id="q" placeholder="Type or paste the question here..."></textarea>
+<div class="actions"><button id="clear" class="secondary">Clear</button><button id="go" class="primary">Explain it</button></div>
+</section>
+
+<section id="out" class="card hide">
+<h2>2. Study help <span class="pill">Study mode</span></h2>
+<div id="text" class="result"></div>
+<div class="notice"><b>Note:</b> This version helps you understand the question. It doesn't automatically click or submit answers on a quiz.</div>
+</section>
+<footer>StudySnap prototype</footer>
+</main>
+<script>
+const f=document.querySelector('#file'),p=document.querySelector('#preview'),q=document.querySelector('#q'),o=document.querySelector('#out'),t=document.querySelector('#text');
+f.onchange=()=>{if(f.files[0]){p.src=URL.createObjectURL(f.files[0]);p.classList.remove('hide')}};
+document.querySelector('#clear').onclick=()=>{f.value='';q.value='';p.classList.add('hide');o.classList.add('hide')};
+document.querySelector('#go').onclick=()=>{
+ o.classList.remove('hide');
+ const s=q.value.trim();
+ t.textContent=s?`Question:\\n${s}\\n\\nHow to work it out:\\n1. Identify exactly what the question is asking.\\n2. Pick out the important facts and keywords.\\n3. Eliminate choices that contradict the question.\\n4. Choose the answer that is best supported by the evidence.\\n\\nThe next version can add OCR + an AI backend so the screenshot itself can be read automatically.`:
+`Upload a screenshot and type the question above for this prototype. The next version can use OCR to read the screenshot automatically.`;
+};
+document.querySelector('#theme').onclick=()=>document.body.classList.toggle('light');
+</script>
+</body></html>
